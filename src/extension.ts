@@ -39,40 +39,12 @@ export function activate(context: vscode.ExtensionContext) {
 		replyNote(reply);
 	}));
 
-	context.subscriptions.push(vscode.commands.registerCommand('mywiki.startDraft', (reply: vscode.CommentReply) => {
-		const thread = reply.thread;
-		thread.contextValue = 'draft';
-		const newComment = new NoteComment(reply.text, vscode.CommentMode.Preview, { name: 'vscode' }, thread);
-		newComment.label = 'pending';
-		thread.comments = [...thread.comments, newComment];
-	}));
-
-	context.subscriptions.push(vscode.commands.registerCommand('mywiki.finishDraft', (reply: vscode.CommentReply) => {
-		const thread = reply.thread;
-
-		if (!thread) {
-			return;
-		}
-
-		thread.contextValue = undefined;
-		thread.collapsibleState = vscode.CommentThreadCollapsibleState.Collapsed;
-		if (reply.text) {
-			const newComment = new NoteComment(reply.text, vscode.CommentMode.Preview, { name: 'vscode' }, thread);
-			thread.comments = [...thread.comments, newComment].map(comment => {
-				comment.label = undefined;
-				return comment;
-			});
-		}
-	}));
-
 	context.subscriptions.push(vscode.commands.registerCommand('mywiki.deleteNoteComment', (comment: NoteComment) => {
 		const thread = comment.parent;
 		if (!thread) {
 			return;
 		}
-
 		thread.comments = thread.comments.filter(cmt => (cmt as NoteComment).id !== comment.id);
-
 		if (thread.comments.length === 0) {
 			thread.dispose();
 		}
@@ -86,12 +58,10 @@ export function activate(context: vscode.ExtensionContext) {
 		if (!comment.parent) {
 			return;
 		}
-
 		comment.parent.comments = comment.parent.comments.map(cmt => {
 			if ((cmt as NoteComment).id === comment.id) {
 				cmt.mode = vscode.CommentMode.Preview;
 			}
-
 			return cmt;
 		});
 	}));
@@ -100,12 +70,10 @@ export function activate(context: vscode.ExtensionContext) {
 		if (!comment.parent) {
 			return;
 		}
-
 		comment.parent.comments = comment.parent.comments.map(cmt => {
 			if ((cmt as NoteComment).id === comment.id) {
 				cmt.mode = vscode.CommentMode.Preview;
 			}
-
 			return cmt;
 		});
 	}));
@@ -114,12 +82,10 @@ export function activate(context: vscode.ExtensionContext) {
 		if (!comment.parent) {
 			return;
 		}
-
 		comment.parent.comments = comment.parent.comments.map(cmt => {
 			if ((cmt as NoteComment).id === comment.id) {
 				cmt.mode = vscode.CommentMode.Editing;
 			}
-
 			return cmt;
 		});
 	}));
