@@ -1,14 +1,14 @@
 {
-	"name": "vscode-comment-api-example",
-	"displayName": "Comment API Sample",
-	"description": "Comment API Sample",
+	"name": "vscode-comment-note",
+	"displayName": "Comment Note",
+	"description": "Comment Note",
 	"version": "0.0.1",
-	"publisher": "vscode-samples",
+	"publisher": "CommentNote",
 	"private": true,
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-extension-samples"
+		"url": "https://github.com/HayatoKudou/vscode-comment-note"
 	},
 	"engines": {
 		"vscode": "^1.35.0"
